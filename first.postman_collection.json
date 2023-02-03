@@ -36,7 +36,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"teste livro\",\r\n    \"description\": \"teste descrição\",\r\n    \"author_id\": 1\r\n}",
+							"raw": "{\r\n    \"title\": \"teste livro\",\r\n    \"description\": \"teste descrição\",\r\n    \"author_id\": 1,\r\n    \"categories\": [1, 3]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -65,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 4,\r\n    \"title\": \"teste livrso\",\r\n    \"description\": \"teste descrição\",\r\n    \"author_id\": 1\r\n}",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"title\": \"teste livrso\",\r\n    \"description\": \"teste descrição\",\r\n    \"author_id\": 1,\r\n    \"categories\": [1, 4]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
