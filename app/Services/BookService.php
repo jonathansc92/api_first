@@ -11,11 +11,13 @@ class BookService
 {
     private $repository;
     private $validator;
+    private $bookCategoryService;
 
-    public function __construct(BookRepository $repository, BookValidator $validator)
+    public function __construct(BookRepository $repository, BookValidator $validator, BookCategoryService $bookCategoryService)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->bookCategoryService = $bookCategoryService;
     }
 
     public function get() {
@@ -56,8 +58,21 @@ class BookService
 
     public function create(Array $data) {
         try {
-            $this->validator->
-            $this->repository->create($data);
+
+            $bookData['title'] = $data['title']; 
+            $bookData['description'] = $data['description']; 
+            $bookData['author_id'] = $data['author_id']; 
+
+            $book = $this->repository->create($bookData);
+
+            if ($data['categories']) {
+                foreach ($data['categories'] as $category) {
+                    $bookCategoryData['book_id'] = $book->id;
+                    $bookCategoryData['category_id'] = $category;
+
+                    $this->bookCategoryService->create($bookCategoryData);
+                }
+            }
 
             return response()->json(["message" => "Livro criado com sucesso!"], 201);
 
@@ -69,7 +84,22 @@ class BookService
 
     public function update(Array $data, Int $id) {
         try {
-            $this->repository->update($data, $id);
+
+            $bookData['title'] = $data['title']; 
+            $bookData['description'] = $data['description']; 
+            $bookData['author_id'] = $data['author_id']; 
+
+            $this->repository->update($bookData, $id);
+
+            if ($data['categories']) {
+                $this->bookCategoryService->deleteByBook($id);
+
+                foreach ($data['categories'] as $category) {
+                    $bookCategoryData['book_id'] = $id;
+                    $bookCategoryData['category_id'] = $category;
+                    $this->bookCategoryService->create($bookCategoryData);
+                }
+            }
 
             return response()->json(["message" => "Livro atualizado com sucesso!"], 200);
 
