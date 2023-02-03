@@ -41,7 +41,7 @@ class BookService
 
     public function find(Int $id) {
         try {
-            $book = $this->repository->find($id);
+            $book = $this->repository->with(['author', 'categories.category'])->find($id);
 
             if (!$book) {
                 return response()->json(["message" => "O livro não foi encontrado!"], 404);
